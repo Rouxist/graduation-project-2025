@@ -1,0 +1,11 @@
+name: histo_clipcap
+channels:
+  - defaults
+dependencies:
+  - python>=3.8
+  - pip>=21
+  - scikit-image=0.18.1
+  - pip:
+      - transformers==4.37.2
+      - open_clip_torch
+      - tqdm
