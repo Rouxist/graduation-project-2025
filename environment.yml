@@ -8,4 +8,5 @@ dependencies:
   - pip:
       - transformers==4.37.2
       - open_clip_torch
+      - sacremoses
       - tqdm
