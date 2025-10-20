@@ -193,9 +193,10 @@ def main():
         sys.stdout.flush()
     
     start_time = time.time()
+    
     train(dataset, model, args, output_dir=args.out_dir, output_prefix=args.prefix)
     
-    print(f"\n\nTook {start_time-time.time()} seconds")
+    print(f"\n\nTook {time.time()-start_time} seconds")
 
 
 if __name__ == '__main__':
