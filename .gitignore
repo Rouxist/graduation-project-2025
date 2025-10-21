@@ -114,5 +114,8 @@ __MACOSX/
 # dataset
 data/quilt1m/*
 
+# checkpoints
+pretrained_models/*
+
 # scripts
 temp_*.py
