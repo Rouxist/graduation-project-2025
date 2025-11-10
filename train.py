@@ -151,7 +151,7 @@ def train(dataset: ClipCapDataset, model: HistoClipCap, args,
                 )
         progress.close()
 
-        if epoch % args.save_every == 0 or epoch == epochs - 1:
+        if (epoch+1) % args.save_every == 0 or epoch == epochs - 1:
             torch.save(
                 model.state_dict(),
                 os.path.join(output_dir, f"{output_prefix}-{epoch:03d}.pt"),
