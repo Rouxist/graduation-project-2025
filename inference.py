@@ -194,7 +194,7 @@ captions = converted_images["captions"]
 
 for i in captions:
     if i['image_id']+".jpg"== NAME:
-        prefix = clip_embedding[i['clip_embedding']].unsqueeze(0)
+        prefix = clip_embedding[i['clip_embedding']].unsqueeze(0).to(device)
 
 with torch.no_grad():
     prefix_embed = model.clip_project(prefix).reshape(1, prefix_length, -1)
