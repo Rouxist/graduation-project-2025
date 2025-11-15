@@ -106,6 +106,15 @@ class HistoClipCap(nn.Module):
         out = self.gpt(inputs_embeds=embedding_cat, labels=labels, attention_mask=mask)
         return out
 
+class HistoClipCapPrefix(HistoClipCap):
+
+    def parameters(self, recurse: bool = True):
+        return self.clip_project.parameters()
+
+    def train(self, mode: bool = True):
+        super(HistoClipCapPrefix, self).train(mode)
+        self.gpt.eval()
+        return self
 
 def train(train_dataset: ClipCapDataset, val_dataset: ClipCapDataset, model: HistoClipCap, args,
           lr: float = 2e-5, warmup_steps: int = 5000, output_dir: str = ".", output_prefix: str = ""):
@@ -219,10 +228,9 @@ def main():
     args.mapping_type = {'mlp': MappingType.MLP, 'transformer': MappingType.Transformer}[args.mapping_type]
 
     if args.only_prefix:
-        print("Not supported yet")
-        # model = ClipCaptionPrefix(prefix_length, clip_length=args.prefix_length_clip, prefix_size=prefix_dim,
-        #                           num_layers=args.num_layers, mapping_type=args.mapping_type)
-        # print("Train only prefix")
+        model = HistoClipCapPrefix(prefix_length, clip_length=args.prefix_length_clip, prefix_size=prefix_dim,
+                                  num_layers=args.num_layers, mapping_type=args.mapping_type)
+        print("Train only prefix")
     else:
         model = HistoClipCap(prefix_length, clip_length=args.prefix_length_clip, prefix_size=prefix_dim,
                                   num_layers=args.num_layers, mapping_type=args.mapping_type)
