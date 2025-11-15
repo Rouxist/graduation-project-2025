@@ -107,7 +107,7 @@ class HistoClipCap(nn.Module):
         return out
 
 
-def train(dataset: ClipCapDataset, model: HistoClipCap, args,
+def train(train_dataset: ClipCapDataset, val_dataset: ClipCapDataset, model: HistoClipCap, args,
           lr: float = 2e-5, warmup_steps: int = 5000, output_dir: str = ".", output_prefix: str = ""):
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -119,49 +119,85 @@ def train(dataset: ClipCapDataset, model: HistoClipCap, args,
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     model = model.to(device)
-    model.train()
     optimizer = AdamW(model.parameters(), lr=lr)
-    train_dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False, drop_last=True)
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False, drop_last=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, drop_last=True)
     scheduler = get_linear_schedule_with_warmup(
         optimizer, num_warmup_steps=warmup_steps, num_training_steps=epochs * len(train_dataloader)
     )
+    
+    train_losses = []
+    val_losses = []
+
     # save_config(args)
     for epoch in range(epochs):
         print(f">>> Training epoch {epoch+1}")
         sys.stdout.flush()
+
+        model.train()
+        running_train_loss = 0.0
         progress = tqdm(total=len(train_dataloader), desc=output_prefix)
 
-        for idx, (tokens, mask, prefix) in enumerate(train_dataloader):
-            model.zero_grad()
+        for tokens, mask, prefix in train_dataloader:
             tokens, mask, prefix = tokens.to(device), mask.to(device), prefix.to(device, dtype=torch.float32)
+            optimizer.zero_grad()
             outputs = model(tokens, prefix, mask)
-            logits = outputs.logits[:, dataset.prefix_length - 1: -1]
+            logits = outputs.logits[:, train_dataset.prefix_length - 1: -1]
             loss = nnf.cross_entropy(logits.reshape(-1, logits.shape[-1]), tokens.flatten(), ignore_index=0)
-
             loss.backward()
             optimizer.step()
             scheduler.step()
-            optimizer.zero_grad()
+
+            running_train_loss += loss.item()
             progress.set_postfix({"loss": loss.item()})
             progress.update(1)
-            if (idx + 1) % 10000 == 0:
-                torch.save(
-                    model.state_dict(),
-                    os.path.join(output_dir, f"{output_prefix}_latest.pt"),
-                )
+
         progress.close()
+        epoch_train_loss = running_train_loss / len(train_dataloader)
+        train_losses.append(epoch_train_loss)
+
+        print(f">>> Validating epoch {epoch+1}")
+        model.eval()
+        running_val_loss = 0.0
+
+        with torch.no_grad():
+            for tokens, mask, prefix in val_dataloader:
+                tokens, mask, prefix = (
+                    tokens.to(device),
+                    mask.to(device),
+                    prefix.to(device, dtype=torch.float32),
+                )
+
+                outputs = model(tokens, prefix, mask)
+                logits = outputs.logits[:, train_dataset.prefix_length - 1: -1]
+
+                loss = nnf.cross_entropy(
+                    logits.reshape(-1, logits.shape[-1]),
+                    tokens.flatten(),
+                    ignore_index=0
+                )
+
+                running_val_loss += loss.item()
+
+        epoch_val_loss = running_val_loss / len(val_dataloader)
+        val_losses.append(epoch_val_loss)
+
+        print(f"Epoch {epoch+1}: Train Loss = {epoch_train_loss:.4f}, Val Loss = {epoch_val_loss:.4f}")
+
 
         if (epoch+1) % args.save_every == 0 or epoch == epochs - 1:
             torch.save(
                 model.state_dict(),
                 os.path.join(output_dir, f"{output_prefix}-{epoch+1:03d}.pt"),
             )
-    return model
+
+    return model, train_losses, val_losses
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--data_train', default='./data/quilt1m/oscar_split_train.pkl')
+    parser.add_argument('--data_val', default='./data/quilt1m/oscar_split_val.pkl')
     parser.add_argument('--out_dir', default='./checkpoints')
     parser.add_argument('--prefix', default='histo_clipcap', help='prefix for saved filenames')
     parser.add_argument('--epochs', type=int, default=10)
@@ -176,7 +212,8 @@ def main():
     parser.add_argument('--normalize_prefix', dest='normalize_prefix', action='store_true')
     args = parser.parse_args()
     prefix_length = args.prefix_length
-    dataset = ClipCapDataset(args.data_train, prefix_length, normalize_prefix=args.normalize_prefix)
+    train_dataset = ClipCapDataset(args.data_train, prefix_length, normalize_prefix=args.normalize_prefix)
+    val_dataset = ClipCapDataset(args.data_val, prefix_length, normalize_prefix=args.normalize_prefix)
 
     prefix_dim = 640 if args.is_rn else 512
     args.mapping_type = {'mlp': MappingType.MLP, 'transformer': MappingType.Transformer}[args.mapping_type]
@@ -194,7 +231,7 @@ def main():
     
     start_time = time.time()
     
-    train(dataset, model, args, output_dir=args.out_dir, output_prefix=args.prefix)
+    train(train_dataset, val_dataset, model, args, output_dir=args.out_dir, output_prefix=args.prefix)
     
     print(f"\n\nTook {time.time()-start_time} seconds")
 
