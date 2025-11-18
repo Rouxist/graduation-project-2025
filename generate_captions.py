@@ -123,7 +123,7 @@ def main():
     parser.add_argument('--test_pkl_dir', default='./data/quilt1m/oscar_split_test.pkl')
     parser.add_argument('--caption_length', type=int, default=128, help='max # of tokens of the generated caption')
     parser.add_argument('--out_dir', default='./evaluation')
-    parser.add_argument('--out_json_name', default='quilt_1m_test_small_pred.json')
+    parser.add_argument('--out_json_name', default='quilt_1m_test_example_generated.json')
     parser.add_argument('--prefix_length', type=int, default=10)
     parser.add_argument('--mapping_type', type=str, default='mlp', help='mlp/transformer')
     args = parser.parse_args()
