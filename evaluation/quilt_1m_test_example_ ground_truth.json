@@ -1,0 +1,109 @@
+{
+  "info": {
+    "description": "Example image ids and ground truth captions compatible with the evaluation script.",
+    "version": "1.0"
+  },
+  "licenses": [],
+  "images": [
+    { "id": "-2beFTPqWIA_image_e81a8e82-93ee-48b1-b241-e6adb07b1966" },
+    { "id": "-2beFTPqWIA_image_873b7727-a1a1-4aa9-b93a-68c4e143126c" },
+    { "id": "-2beFTPqWIA_image_5eb5858b-9fd6-4391-a815-05d49cdb65c1" },
+    { "id": "-4iZCsu91ns_image_87cf63e6-ed79-435f-a0db-ac684b040cf5" },
+    { "id": "-5B-adhGPXc_image_94e4c77e-d90a-45e7-b940-802c3f96ae4d" }
+  ],
+  "annotations": [
+    {
+      "image_id": "-2beFTPqWIA_image_e81a8e82-93ee-48b1-b241-e6adb07b1966",
+      "id": 1,
+      "caption": "Microscopically, there is an endophytic and exophytic papilla."
+    },
+    {
+      "image_id": "-2beFTPqWIA_image_e81a8e82-93ee-48b1-b241-e6adb07b1966",
+      "id": 2,
+      "caption": "Myrmecia is a viral wart commonly found on the hands and feet, also known as palmar plantar wart."
+    },
+    {
+      "image_id": "-2beFTPqWIA_image_e81a8e82-93ee-48b1-b241-e6adb07b1966",
+      "id": 3,
+      "caption": "The lesion has a mounded appearance and can be found in younger people."
+    },
+    {
+      "image_id": "-2beFTPqWIA_image_873b7727-a1a1-4aa9-b93a-68c4e143126c",
+      "id": 4,
+      "caption": "Molluscum bodies are larger and displace the nuclei of keratinocyte."
+    },
+    {
+      "image_id": "-2beFTPqWIA_image_873b7727-a1a1-4aa9-b93a-68c4e143126c",
+      "id": 5,
+      "caption": "Comparison of molluscum bodies and myrmecia bodies."
+    },
+    {
+      "image_id": "-2beFTPqWIA_image_873b7727-a1a1-4aa9-b93a-68c4e143126c",
+      "id": 6,
+      "caption": "Verruca vulgaris has large nuclei and smaller cytoplasmic inclusions."
+    },
+    {
+      "image_id": "-2beFTPqWIA_image_873b7727-a1a1-4aa9-b93a-68c4e143126c",
+      "id": 7,
+      "caption": "Description of physical characteristics of nuclei in keratinocytes and comparison to verruca vulgaris and myrmecia."
+    },
+
+    {
+      "image_id": "-2beFTPqWIA_image_5eb5858b-9fd6-4391-a815-05d49cdb65c1",
+      "id": 8,
+      "caption": "Characteristic displacement of nuclei."
+    },
+    {
+      "image_id": "-2beFTPqWIA_image_5eb5858b-9fd6-4391-a815-05d49cdb65c1",
+      "id": 9,
+      "caption": "Presence of Molluscum bodies, also known as molluscum contagiosum virus particles, which are redder in color than myrmecia."
+    },
+
+    {
+      "image_id": "-4iZCsu91ns_image_87cf63e6-ed79-435f-a0db-ac684b040cf5",
+      "id": 10,
+      "caption": "Nuclear molding was observed."
+    },
+    {
+      "image_id": "-4iZCsu91ns_image_87cf63e6-ed79-435f-a0db-ac684b040cf5",
+      "id": 11,
+      "caption": "Herpes simplex type 1 and type 2 produce similar cytopathic changes."
+    },
+    {
+      "image_id": "-4iZCsu91ns_image_87cf63e6-ed79-435f-a0db-ac684b040cf5",
+      "id": 12,
+      "caption": "Biopsy was taken from the pink area of the necrotic nasal mucosa."
+    },
+    {
+      "image_id": "-4iZCsu91ns_image_87cf63e6-ed79-435f-a0db-ac684b040cf5",
+      "id": 13,
+      "caption": "Diagnosis of herpes simplex virus infection was given based on nuclear features."
+    },
+    {
+      "image_id": "-5B-adhGPXc_image_94e4c77e-d90a-45e7-b940-802c3f96ae4d",
+      "id": 14,
+      "caption": "Osteoid matrix mineralization with a purple matrix pattern is seen on the far right of the coronary biopsy."
+    },
+    {
+      "image_id": "-5B-adhGPXc_image_94e4c77e-d90a-45e7-b940-802c3f96ae4d",
+      "id": 15,
+      "caption": "A pleomorphic sarcoma with large hyperchromatic cells is present centrally."
+    },
+    {
+      "image_id": "-5B-adhGPXc_image_94e4c77e-d90a-45e7-b940-802c3f96ae4d",
+      "id": 16,
+      "caption": "Highly suspicious radiographs for osteosarcoma based on a coronary biopsy. Osteoid matrix mineralization seen on the biopsy."
+    },
+    {
+      "image_id": "-5B-adhGPXc_image_94e4c77e-d90a-45e7-b940-802c3f96ae4d",
+      "id": 17,
+      "caption": "Abnormal bone osteoid matrix mineralization is seen at higher power."
+    },
+    {
+      "image_id": "-5B-adhGPXc_image_94e4c77e-d90a-45e7-b940-802c3f96ae4d",
+      "id": 18,
+      "caption": "Pleomorphic sarcoma with large hyperchromatic cells and abnormal bone osteoid matrix mineralization is consistent with osteoblastic osteosarcoma."
+    }
+  ],
+  "type": "captions"
+}
