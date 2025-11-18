@@ -14,8 +14,6 @@ This project was conducted by [Ammar Rais](https://www.linkedin.com/in/ammar-rai
 
 ## Environment Setup
 
-\*\* This environment covers libraries required for `parse_image.py` and `train.py'. Other scripts may require additional libraries.
-
 ```
 git clone https://github.com/Rouxist/graduation-project-2025
 cd graduation-project-2025
@@ -31,19 +29,29 @@ The output CSV file from `preprocess_dedup_same_images.py` is further processed 
 
 ## Training
 
-\*\*First, encode images using `parse_image.py`.
+First, encode images into embedding vectors using `parse_image.py`.
 
 ```
 python parse_image.py
 ```
 
-\*\*Then, fine-tune like this.
+Next, train the model using `train.py` with the desired hyperparameters.
 
 ```
-python train.py --data_train ./Data/quilt1m/oscar_split_train.pkl --out_dir ./quilt1m_train/
+python train.py --data_train ./Data/quilt1m/oscar_split_train.pkl --out_dir ./quilt1m_train/ prefix mlp_trial_id001 --epochs 15 --save_every 5  --mapping_type transformer
+```
+
+## Inference
+
+The `generate_captions.py` script generates caption of every image in the pkl-converted file(oscar_split_test.pkl) of the test dataset.
+
+```
+python generate_captions.py --ckpt_dir ./pretrained_models/{model name}.pt --test_pkl_dir ./data/quilt1m/oscar_split_test.pkl --caption_length 128 --out_dir ./evaluation --out_json_name quilt_1m_test_small_pred.json --prefix_length 10 --mapping_type transformer
 ```
 
 ## Examples
+
+Example images and their corresponding generated captions will be added.
 
 ## Others
 
