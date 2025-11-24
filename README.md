@@ -4,11 +4,9 @@
 
 This repository contains the work for the 2025 graduation project at the Department of Data Science, Hanyang University.
 
-\*\*This work applies [ClipCap](https://github.com/rmokady/CLIP_prefix_caption) on histopathology domain.
+The goal is to apply [ClipCap](https://github.com/rmokady/CLIP_prefix_caption) architecture to the histopathology domain for caption generation.
 
-\*\*We used [Quilt1M](https://github.com/wisdomikezogwo/quilt1m) dataset to utilize large amount of histopathology image-text pair.
-
-\*\*It combines [Quilt-B-32](https://huggingface.co/wisdomik/QuiltNet-B-32) and [BioGPT](https://github.com/microsoft/BioGPT) to handle histopathology domain with ClipCap.
+We integrated [Quilt-B-32](https://huggingface.co/wisdomik/QuiltNet-B-32) and [BioGPT](https://github.com/microsoft/BioGPT) to form a ClipCap-based architecture and trained it on the [Quilt1M](https://github.com/wisdomikezogwo/quilt1m) dataset, which contains abundant histopathology image–text pairs.
 
 This project was conducted by [Ammar Rais](https://www.linkedin.com/in/ammar-rais/) and [Yongjin Kang](https://www.linkedin.com/in/yongjin-kang/).
 
