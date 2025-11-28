@@ -20,11 +20,6 @@ def main():
 
     coco_eval.evaluate()
 
-    # print output evaluation scores
-    for metric, score in coco_eval.eval.items():
-        print(f'{metric}: {score:.3f}')
-
-    print("Evaluation is done.")
 
 if __name__ == '__main__':
     main()
