@@ -137,7 +137,9 @@ def main():
 
     ## Setup model
     tokenizer = BioGptTokenizer.from_pretrained("microsoft/biogpt")
-    model = HistoClipCap(prefix_length)
+    model = HistoClipCap(prefix_length=prefix_length,
+                         prefix_size=512,
+                         mapping_type=args.mapping_type)
 
     checkpoints = torch.load(args.ckpt_dir, map_location=device, weights_only=True)
     model.load_state_dict(checkpoints, strict=False) 
