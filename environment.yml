@@ -10,3 +10,4 @@ dependencies:
       - open_clip_torch
       - sacremoses
       - tqdm
+      - pycocoevalcap
