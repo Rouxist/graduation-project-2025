@@ -49,8 +49,4 @@ python generate_captions.py --ckpt_dir ./pretrained_models/{model name}.pt --tes
 
 ## Examples
 
-Example images and their corresponding generated captions will be added.
-
-## Others
-
-Final report will be added.
+![Alt text](assets/generation_examples.png)
